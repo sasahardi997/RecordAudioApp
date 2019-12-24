@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    btnStopRecord.setEnabled(true);
+                    btnStartRecord.setEnabled(false);
                     btnPlay.setEnabled(false);
                     btnStop.setEnabled(false);
 
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaRecorder.stop();
-                btnStopRecord.setEnabled(true);
+                btnStopRecord.setEnabled(false);
                 btnPlay.setEnabled(true);
                 btnStartRecord.setEnabled(true);
                 btnStop.setEnabled(false);
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnStopRecord.setEnabled(true);
+                btnStopRecord.setEnabled(false);
                 btnStartRecord.setEnabled(true);
                 btnStop.setEnabled(false);
                 btnPlay.setEnabled(false);
