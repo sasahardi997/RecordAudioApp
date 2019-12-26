@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 btnStopRecord.setEnabled(false);
                 btnStartRecord.setEnabled(true);
                 btnStop.setEnabled(false);
-                btnPlay.setEnabled(false);
+                btnPlay.setEnabled(true);
 
                 if(mediaPlayer != null){
                     mediaPlayer.stop();
