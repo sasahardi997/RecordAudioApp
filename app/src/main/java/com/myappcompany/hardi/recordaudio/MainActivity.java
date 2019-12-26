@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Request permission
 
         btnStopRecord.setEnabled(false);
         btnPlay.setEnabled(false);
@@ -108,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                             + UUID.randomUUID().toString()+"_audio_record.3gp";
 
                     setupMediaRecorder();
+
+
                     try {
                         mediaRecorder.prepare();
                         mediaRecorder.start();
@@ -144,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnStop.setEnabled(true);
                 btnStopRecord.setEnabled(false);
-                btnStartRecord.setEnabled(false);
+
+
 
                 mediaPlayer=new MediaPlayer();
                 try {
@@ -156,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 mediaPlayer.start();
+                btnStartRecord.setEnabled(true);
                 Toast.makeText(MainActivity.this, "Playing...", Toast.LENGTH_SHORT).show();
             }
         });

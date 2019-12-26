@@ -28,6 +28,8 @@ dependencies {
     implementation 'com.android.support:support-v4:29.0.0'
     implementation 'com.android.support:design:29.0.0'
 
+
+
     implementation 'com.google.firebase:firebase-database:19.0.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.1'
