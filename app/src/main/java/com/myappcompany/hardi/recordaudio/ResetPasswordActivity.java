@@ -1,6 +1,7 @@
 package com.myappcompany.hardi.recordaudio;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,8 +30,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Reset Password");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("Reset Password");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         send_email=findViewById(R.id.send_email);
         btn_reset=findViewById(R.id.btn_reset);

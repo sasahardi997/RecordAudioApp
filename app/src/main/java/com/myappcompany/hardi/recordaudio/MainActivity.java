@@ -1,6 +1,7 @@
 package com.myappcompany.hardi.recordaudio;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -9,8 +10,13 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.media.PlaybackParams;
+import android.media.audiofx.BassBoost;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -41,10 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
     //Record audio variables
 
-    Button btnStartRecord, btnStopRecord, btnPlay, btnStop;
+    Button btnStartRecord, btnStopRecord, btnPlay;
     String pathSave="";
     MediaRecorder mediaRecorder;
     MediaPlayer mediaPlayer;
+
+
+    private static final Float pitch=0.7f;
     
     final int REQUEST_PERMISSION_CODE=1000;
 
@@ -86,14 +95,12 @@ public class MainActivity extends AppCompatActivity {
         btnStartRecord=findViewById(R.id.btnStartRecord);
         btnStopRecord=findViewById(R.id.btnStopRecord);
         btnPlay=findViewById(R.id.btnPlay);
-        btnStop=findViewById(R.id.btnStop);
 
 
 
 
         btnStopRecord.setEnabled(false);
         btnPlay.setEnabled(false);
-        btnStop.setEnabled(false);
 
         btnStartRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                     btnStopRecord.setEnabled(true);
                     btnStartRecord.setEnabled(false);
                     btnPlay.setEnabled(false);
-                    btnStop.setEnabled(false);
 
                     Toast.makeText(MainActivity.this, "Recording...",Toast.LENGTH_SHORT).show();
 
@@ -138,14 +144,12 @@ public class MainActivity extends AppCompatActivity {
                 btnStopRecord.setEnabled(false);
                 btnPlay.setEnabled(true);
                 btnStartRecord.setEnabled(true);
-                btnStop.setEnabled(false);
             }
         });
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnStop.setEnabled(true);
                 btnStopRecord.setEnabled(false);
 
                 playAudio(pathSave);
@@ -155,35 +159,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnStopRecord.setEnabled(false);
-                btnStartRecord.setEnabled(true);
-                btnStop.setEnabled(false);
-                btnPlay.setEnabled(true);
-
-                if(mediaPlayer != null){
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    setupMediaRecorder();
-                }
-            }
-        });
-
     }
 
-    private MediaPlayer playAudio(String pathSave){
-        try {
-            mediaPlayer=new MediaPlayer();
-            mediaPlayer.setDataSource(pathSave);
-
-
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private PlaybackParams playbackParams(MediaPlayer mediaPlayer){
+        PlaybackParams params= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            params = new PlaybackParams();
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            params.setPitch(pitch);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mediaPlayer.setPlaybackParams(params);
+        }
+        return params;
+    }
+
+
+
+    private MediaPlayer playAudio(String pathSave){
+
+            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(pathSave));
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            playbackParams(mediaPlayer);
+
+            mediaPlayer.start();
         return mediaPlayer;
     }
 

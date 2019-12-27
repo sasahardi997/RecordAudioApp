@@ -1,6 +1,7 @@
 package com.myappcompany.hardi.recordaudio;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -37,8 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Register");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("Register");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         username=findViewById(R.id.username);
         email=findViewById(R.id.email);
