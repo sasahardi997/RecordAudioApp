@@ -104,9 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
                     pathSave= Environment.getExternalStorageDirectory()
                             .getAbsolutePath()+"/"
-                            + UUID.randomUUID().toString()+"_audio_record.3gp";
+                            + UUID.randomUUID().toString()+"_audio_record.wav";
+
 
                     setupMediaRecorder();
+
 
 
                     try {
@@ -146,18 +148,8 @@ public class MainActivity extends AppCompatActivity {
                 btnStop.setEnabled(true);
                 btnStopRecord.setEnabled(false);
 
+                playAudio(pathSave);
 
-
-                mediaPlayer=new MediaPlayer();
-                try {
-                    mediaPlayer.setDataSource(pathSave);
-                    mediaPlayer.prepare();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                mediaPlayer.start();
                 btnStartRecord.setEnabled(true);
                 Toast.makeText(MainActivity.this, "Playing...", Toast.LENGTH_SHORT).show();
             }
@@ -179,6 +171,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private MediaPlayer playAudio(String pathSave){
+        try {
+            mediaPlayer=new MediaPlayer();
+            mediaPlayer.setDataSource(pathSave);
+
+
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mediaPlayer;
     }
 
 
